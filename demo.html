@@ -32,15 +32,10 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  .controls {
-    display: flex;
-    gap: 16px;
-    color: #cbb27a;
-    font-family: -apple-system, sans-serif;
-    font-size: 13px;
+  hourglass-controls {
+    --hourglass-controls-color: #cbb27a;
+    --hourglass-controls-accent: #e6b93d;
   }
-  .controls label { display: flex; flex-direction: column; gap: 4px; }
-  .controls input { accent-color: #e6b93d; }
 </style>
 </head>
 <body>
@@ -49,24 +44,9 @@
     <hour-glass id="main" width="260" duration="10" sand-color="#e6b93d" wood-color="#7a4a24"></hour-glass>
     <hour-glass width="160" duration="7" sand-color="#f2c14e" wood-color="#8a5a2b"></hour-glass>
   </div>
-  <div class="controls">
-    <label>Duration (s)
-      <input id="dur" type="range" min="4" max="20" value="10">
-    </label>
-    <label>Sand color
-      <input id="col" type="color" value="#e6b93d">
-    </label>
-  </div>
+  <hourglass-controls for="main"></hourglass-controls>
 
   <script src="hourglass.js"></script>
-  <script>
-    const main = document.getElementById('main');
-    document.getElementById('dur').addEventListener('input', (e) => {
-      main.setAttribute('duration', e.target.value);
-    });
-    document.getElementById('col').addEventListener('input', (e) => {
-      main.setAttribute('sand-color', e.target.value);
-    });
-  </script>
+  <script src="hourglass-controls.js"></script>
 </body>
 </html>

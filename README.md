@@ -171,6 +171,73 @@ All attributes are optional and **live-updatable** — change them at runtime wi
 </script>
 ```
 
+## Ready-made duration/color controls
+
+`hourglass-controls.js` is an optional companion component: it drops a duration slider and a color picker onto the page and wires them up to one or more `<hour-glass>` elements. No JavaScript required from the site owner — just add the script and the tag.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/govindmehta15/Hourglass@main/hourglass.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/govindmehta15/Hourglass@main/hourglass-controls.js"></script>
+
+<hour-glass id="main" duration="10" sand-color="#e6b93d"></hour-glass>
+<hourglass-controls for="main"></hourglass-controls>
+```
+
+| Attribute | Default | Description |
+|---|---|---|
+| `for` | — | Space-separated `id`(s) of the `<hour-glass>` element(s) to control |
+| `show-duration` | `true` | Show/hide the duration slider |
+| `show-color` | `true` | Show/hide the color picker |
+| `duration-min` / `duration-max` | `4` / `20` | Range of the duration slider (seconds) |
+| `label-duration` / `label-color` | `"Duration"` / `"Color"` | Custom labels |
+
+Restyle it to match your site with CSS custom properties:
+
+```css
+hourglass-controls {
+  --hourglass-controls-color: #333;   /* label text color */
+  --hourglass-controls-accent: #e6b93d; /* slider/picker accent */
+}
+```
+
+## Framework hooks (for developers)
+
+If you'd rather drive `duration`/`sand-color` from your own app state instead of the ready-made UI above, copy one of these small integration files into your project:
+
+- **React:** [`integrations/react/useHourglass.jsx`](integrations/react/useHourglass.jsx) — a `useHourglass()` hook plus a `<Hourglass duration={12} color="#e6b93d" />` wrapper component
+- **Vue 3:** [`integrations/vue/useHourglass.js`](integrations/vue/useHourglass.js) — a `useHourglass(elRef, { duration, color })` composable
+
+**React:**
+
+```jsx
+import { Hourglass } from './useHourglass.jsx';
+
+function App() {
+  const [duration, setDuration] = useState(12);
+  const [color, setColor] = useState('#e6b93d');
+  return <Hourglass duration={duration} color={color} />;
+}
+```
+
+**Vue 3:**
+
+```vue
+<template>
+  <hour-glass ref="hg"></hour-glass>
+</template>
+<script setup>
+import { ref } from 'vue';
+import { useHourglass } from './useHourglass.js';
+
+const hg = ref(null);
+const duration = ref(12);
+const color = ref('#e6b93d');
+useHourglass(hg, { duration, color });
+</script>
+```
+
+Both files are plain JS/JSX with no build step of their own — just drop them in and import.
+
 ## TypeScript
 
 If you use `<hour-glass>` in a `.tsx`/`.ts` project, declare it as a known JSX element so the compiler doesn't complain:
@@ -206,7 +273,10 @@ This repo is set up to be usable straight from GitHub, two ways:
 
 | File | Purpose |
 |---|---|
-| `hourglass.js` | The entire component — the only file you need to ship |
+| `hourglass.js` | The `<hour-glass>` component — the only file you need to ship |
+| `hourglass-controls.js` | Optional `<hourglass-controls>` companion — ready-made duration/color UI |
+| `integrations/react/useHourglass.jsx` | Optional React hook + wrapper component |
+| `integrations/vue/useHourglass.js` | Optional Vue 3 composable |
 | `index.html` | Live interactive demo (served by GitHub Pages) |
 | `demo.html` | Local copy of the demo for offline reference |
 | `*.png` | Original source photos the component's artwork was derived from (not required at runtime) |
