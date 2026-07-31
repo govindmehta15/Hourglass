@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hourglass — drop-in animated web component</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A realistic animated hourglass web component. One script tag, works in any frontend stack.">
+<style>
+  html, body {
+    margin: 0;
+    min-height: 100%;
+    background: radial-gradient(ellipse at 50% 30%, #1c140a 0%, #0a0704 60%, #050302 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 60px 20px;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  h1 {
+    color: #e6b93d;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: 0.75;
+    margin: 0;
+    text-align: center;
+  }
+  p.sub {
+    color: #cbb27a;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    max-width: 480px;
+    text-align: center;
+    line-height: 1.6;
+    margin: -24px 0 0;
+  }
+  p.sub code {
+    background: rgba(230, 185, 61, 0.12);
+    color: #f2c14e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  p.sub a { color: #f2c14e; }
+  .row {
+    display: flex;
+    gap: 60px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .controls {
+    display: flex;
+    gap: 16px;
+    color: #cbb27a;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+  }
+  .controls label { display: flex; flex-direction: column; gap: 4px; }
+  .controls input { accent-color: #e6b93d; }
+</style>
+</head>
+<body>
+  <h1>Hourglass — a drop-in animated web component</h1>
+  <p class="sub">
+    Works in plain HTML, React, Vue, Angular, Svelte, WordPress — anywhere.
+    One line: <code>&lt;script src="hourglass.js"&gt;&lt;/script&gt;</code>.
+    See the <a href="https://github.com/govindmehta15/Hourglass">README on GitHub</a> for setup in every stack.
+  </p>
+  <div class="row">
+    <hour-glass id="main" width="260" duration="10" sand-color="#e6b93d" wood-color="#7a4a24"></hour-glass>
+    <hour-glass width="160" duration="7" sand-color="#f2c14e" wood-color="#8a5a2b"></hour-glass>
+  </div>
+  <div class="controls">
+    <label>Duration (s)
+      <input id="dur" type="range" min="4" max="20" value="10">
+    </label>
+    <label>Sand color
+      <input id="col" type="color" value="#e6b93d">
+    </label>
+  </div>
+
+  <script src="hourglass.js"></script>
+  <script>
+    const main = document.getElementById('main');
+    document.getElementById('dur').addEventListener('input', (e) => {
+      main.setAttribute('duration', e.target.value);
+    });
+    document.getElementById('col').addEventListener('input', (e) => {
+      main.setAttribute('sand-color', e.target.value);
+    });
+  </script>
+</body>
+</html>
